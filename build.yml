@@ -1,0 +1,11 @@
+- name: Set up Java
+  uses: actions/setup-java@v4
+  with:
+    distribution: temurin
+    java-version: '17'
+
+- name: Convert ZIP to JAR
+  run: |
+    mkdir extracted
+    unzip plik.zip -d extracted
+    jar --create --file wynik.jar -C extracted .
