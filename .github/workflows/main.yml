@@ -1,0 +1,27 @@
+name: Convert ZIP to JAR
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Convert ZIP to JAR
+        run: |
+          mkdir extracted
+          unzip NetTrace.zip -d extracted
+          jar --create --file NetTrace.jar -C extracted .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NetTrace-jar
+          path: NetTrace.jar
